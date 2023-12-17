@@ -12,6 +12,8 @@ function App() {
   const [formAge, setFormAge] = useState(0);
   const [formMail, setFormMail] = useState("");
   const [fullFormData, setFullFormData] = useState({});
+  const [bandsInput, setBandsInput] = useState("");
+  const [bandsVector, setBandsVector] = useState([]);
   function handleChangeName() {
     if (user === "Random man") setUser(USER_NAMES.firstUser);
     else setUser("Random man");
@@ -100,6 +102,30 @@ function App() {
         <br />
         <div style={{ width: "100%" }}>Form mail: {fullFormData.formMail}</div>
         <br />
+      </div>
+      <div style={{ width: "300px !important" }}>
+        <h1>Add your favorite bands:</h1>
+        <input
+          type="text"
+          minLength={1}
+          value={bandsInput}
+          placeholder="Type a band name and click on add button"
+          onChange={(e) => setBandsInput(e.target.value)}
+        />
+        <button
+          style={{ marginLeft: 30 }}
+          onClick={() => {
+            setBandsVector([...bandsVector, bandsInput]);
+            setBandsInput("");
+          }}
+        >
+          Add
+        </button>
+        <ul>
+          {bandsVector.map((band, bandIndex) => (
+            <li key={bandIndex}>{band}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
