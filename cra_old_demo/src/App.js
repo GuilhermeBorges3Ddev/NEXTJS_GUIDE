@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NameReturner from "./components/NameReturner";
 
 const USER_NAMES = {
@@ -14,10 +14,26 @@ function App() {
   const [fullFormData, setFullFormData] = useState({});
   const [bandsInput, setBandsInput] = useState("");
   const [bandsVector, setBandsVector] = useState([]);
+  const [showBandsActionButtons, setShowBandsActionButtons] = useState(false);
+
+  useEffect(() => {
+    let currentTopFive = JSON.parse(localStorage.getItem("@bands"));
+    if (currentTopFive) setShowBandsActionButtons(true);
+  }, []);
+
+  useEffect(() => {
+    if (bandsVector.length > 5) {
+      let bandsToStorage = bandsVector.slice(0, 5);
+      localStorage.setItem("@bands", JSON.stringify(bandsToStorage));
+      window.location.reload();
+    }
+  }, [bandsVector]);
+
   function handleChangeName() {
     if (user === "Random man") setUser(USER_NAMES.firstUser);
     else setUser("Random man");
   }
+
   function handleRegister(e) {
     e.preventDefault();
     alert("User registered successfully");
@@ -27,6 +43,7 @@ function App() {
       formMail,
     });
   }
+
   return (
     <div>
       <h1>Hello to my demo project!</h1>
@@ -104,7 +121,7 @@ function App() {
         <br />
       </div>
       <div style={{ width: "300px !important" }}>
-        <h1>Add your favorite bands:</h1>
+        <h1>Add your top 5 favorite bands:</h1>
         <input
           type="text"
           minLength={1}
@@ -114,6 +131,7 @@ function App() {
         />
         <button
           style={{ marginLeft: 30 }}
+          disabled={!bandsInput}
           onClick={() => {
             setBandsVector([...bandsVector, bandsInput]);
             setBandsInput("");
@@ -126,6 +144,28 @@ function App() {
             <li key={bandIndex}>{band}</li>
           ))}
         </ul>
+        {showBandsActionButtons && (
+          <div>
+            <button
+              disabled={bandsVector.length === 5}
+              onClick={() => {
+                setBandsVector(JSON.parse(localStorage.getItem("@bands")));
+              }}
+            >
+              Use last top 5
+            </button>
+            <button
+              disabled={bandsVector.length === 0}
+              onClick={() => {
+                localStorage.removeItem("@bands");
+                setBandsVector([]);
+                setShowBandsActionButtons(false);
+              }}
+            >
+              Reset my top 5
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
