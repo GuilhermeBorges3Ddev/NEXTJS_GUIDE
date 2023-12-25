@@ -5,7 +5,9 @@ import FormSection from "../components/FormSection";
 export default function Register() {
   return (
     <div className="formAndTop5">
-      <RoutesMenu availableRoutes={["/", "/nutrition", "/ranking"]} />
+      <RoutesMenu
+        availableRoutes={["/", "/nutrition", "/ranking", `/products/`]}
+      />
       <section>
         <FormSection />
       </section>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function RoutesMenu({ availableRoutes }) {
   let links = [];
+  let productId = Math.floor(Math.random() * (1000000000 - 2 + 1)) + 2;
   if (availableRoutes.some((route) => route === "/"))
     links.push(<Link to="/">Home</Link>);
   if (availableRoutes.some((route) => route === "/register"))
@@ -11,5 +12,7 @@ export default function RoutesMenu({ availableRoutes }) {
     links.push(<Link to="/ranking">Top 5 Bands</Link>);
   if (availableRoutes.some((route) => route === "/nutrition"))
     links.push(<Link to="/nutrition">Nutritional Facts</Link>);
+  if (availableRoutes.some((route) => route.includes("/products/")))
+    links.push(<Link to={`/products/${productId}`}>Product </Link>);
   return <div id="mainMenu">{links.map((link) => link)}</div>;
 }

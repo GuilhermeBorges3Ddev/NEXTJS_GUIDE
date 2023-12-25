@@ -5,7 +5,9 @@ import ChangeNameWrapper from "../components/ChangeNameWrapper";
 export default function Home() {
   return (
     <div>
-      <RoutesMenu availableRoutes={["/register", "/ranking", "/nutrition"]} />
+      <RoutesMenu
+        availableRoutes={["/register", "/ranking", "/nutrition", `/products/`]}
+      />
       <div id="changeNameWrapper">
         <ChangeNameWrapper />
       </div>
