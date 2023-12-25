@@ -1,41 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import FormSection from "./components/FormSection";
-import TopFiveSection from "./components/TopFiveSection";
-import NutritionalFacts from "./components/NutritionalFacts";
-import ChangeNameWrapper from "./components/ChangeNameWrapper";
+import Home from "./pages/Home";
+import Ranking from "./pages/Ranking";
+import Register from "./pages/Register";
+import Nutrition from "./pages/Nutrition";
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          exact
-          path="/"
-          element={
-            <div id="changeNameWrapper">
-              <ChangeNameWrapper />
-            </div>
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <div className="formAndTop5">
-              <section>
-                <FormSection />
-              </section>
-            </div>
-          }
-        />
-        <Route
-          path="/top5"
-          element={
-            <div className="formAndTop5">
-              <TopFiveSection />
-            </div>
-          }
-        />
-        <Route path="/nutritional-facts" element={<NutritionalFacts />} />
+        <Route exact path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/ranking" element={<Ranking />} />
+        <Route path="/nutrition" element={<Nutrition />} />
       </Routes>
     </BrowserRouter>
   );
