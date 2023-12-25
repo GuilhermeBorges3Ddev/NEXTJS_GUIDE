@@ -1,13 +1,23 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
-export default function TopFiveSection({
-  bandsInput,
-  setBandsInput,
-  bandsVector,
-  setBandsVector,
-  showBandsActionButtons,
-  setShowBandsActionButtons,
-}) {
+export default function TopFiveSection() {
+  const [bandsInput, setBandsInput] = useState("");
+  const [bandsVector, setBandsVector] = useState([]);
+  const [showBandsActionButtons, setShowBandsActionButtons] = useState(false);
+
+  useEffect(() => {
+    let currentTopFive = JSON.parse(localStorage.getItem("@bands"));
+    if (currentTopFive) setShowBandsActionButtons(true);
+  }, []);
+
+  useEffect(() => {
+    if (bandsVector.length > 5) {
+      let bandsToStorage = bandsVector.slice(0, 5);
+      localStorage.setItem("@bands", JSON.stringify(bandsToStorage));
+      window.location.reload();
+    }
+  }, [bandsVector]);
+
   return (
     <div style={{ width: "300px !important" }}>
       <h1>Add your top 5 favorite bands:</h1>
