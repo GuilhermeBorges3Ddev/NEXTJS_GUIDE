@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import NameReturner from "./NameReturner";
 
 const USER_NAMES = {
   firstUser: "Norm guy",
   secondUser: "Freak guy",
 };
+
+const ChangeNameBtn = styled.button`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default function ChangeNameWrapper() {
   const [user, setUser] = useState("Random man");
@@ -19,9 +26,9 @@ export default function ChangeNameWrapper() {
       <NameReturner name={user} role={"developer"} />
       <NameReturner name={USER_NAMES.secondUser} role={"admin"} />
       <br />
-      <button style={{ cursor: "pointer" }} onClick={handleChangeName}>
+      <ChangeNameBtn onClick={handleChangeName}>
         Change first user name
-      </button>
+      </ChangeNameBtn>
       <br />
     </section>
   );

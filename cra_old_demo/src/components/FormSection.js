@@ -1,4 +1,54 @@
 import { useState } from "react";
+import styled from "styled-components";
+
+const CustomSection = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+`;
+
+const DashedContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: red;
+  width: 300px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-top: 1rem;
+  padding: 10px;
+`;
+
+const FormWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+`;
+
+const FormWithMargin = styled.form`
+  margin: 20;
+`;
+
+const FullContainerField = styled.div`
+  width: 100%;
+`;
+
+const RegisterButton = styled.button`
+  cursor: pointer;
+  display: block;
+  margin-top: 15px;
+  flex-wrap: nowrap;
+`;
+
+const RegisterHeader = styled.h1`
+  font-size: 25px;
+  margin: 20 0 0 10;
+`;
 
 export default function FormSection() {
   const [formName, setFormName] = useState("");
@@ -17,20 +67,10 @@ export default function FormSection() {
   }
 
   return (
-    <section style={{ display: "flex", flexWrap: "wrap" }}>
-      <h1 style={{ margin: "20 0 0 10" }}>
-        First login? Register your infos first...
-      </h1>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          flexDirection: "row",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
-        <form style={{ margin: 20 }} onSubmit={handleRegister}>
+    <CustomSection>
+      <RegisterHeader>First login? Register your infos first...</RegisterHeader>
+      <FormWrapper>
+        <FormWithMargin onSubmit={handleRegister}>
           <label>Name:</label>
           <br />
           <input
@@ -60,41 +100,23 @@ export default function FormSection() {
             onChange={(e) => setFormMail(e.target.value)}
           />
           <br />
-          <button
-            style={{
-              cursor: "pointer",
-              display: "block",
-              marginTop: 10,
-              flexWrap: "nowrap",
-            }}
-            type="submit"
-          >
-            Register formulary
-          </button>
-        </form>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          border: "1px dashed red",
-          width: "300px",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          marginTop: "1rem",
-        }}
-      >
-        <div style={{ width: "100%" }}>Form name: {fullFormData.formName}</div>
+          <RegisterButton type="submit">Register formulary</RegisterButton>
+        </FormWithMargin>
+      </FormWrapper>
+      <DashedContainer>
+        <FullContainerField>
+          Form name: {fullFormData.formName}
+        </FullContainerField>
         <br />
-        <div style={{ width: "100%" }}>
+        <FullContainerField>
           Form age: {fullFormData.formAge ? fullFormData.formAge : ""}
-        </div>
+        </FullContainerField>
         <br />
-        <div style={{ width: "100%" }}>Form mail: {fullFormData.formMail}</div>
+        <FullContainerField>
+          Form mail: {fullFormData.formMail}
+        </FullContainerField>
         <br />
-      </div>
-    </section>
+      </DashedContainer>
+    </CustomSection>
   );
 }

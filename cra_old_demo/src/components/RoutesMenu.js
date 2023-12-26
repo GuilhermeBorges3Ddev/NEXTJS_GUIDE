@@ -1,5 +1,16 @@
 import React from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
+
+const MainMenu = styled.div`
+  display: flex;
+  margin: 2rem 0;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-flow: nowrap;
+  width: 100vw;
+  gap: 10%;
+`;
 
 export default function RoutesMenu({ availableRoutes }) {
   let links = [];
@@ -14,5 +25,5 @@ export default function RoutesMenu({ availableRoutes }) {
     links.push(<Link to="/nutrition">Nutritional Facts</Link>);
   if (availableRoutes.some((route) => route.includes("/products/")))
     links.push(<Link to={`/products/${productId}`}>Product </Link>);
-  return <div id="mainMenu">{links.map((link) => link)}</div>;
+  return <MainMenu>{links.map((link) => link)}</MainMenu>;
 }

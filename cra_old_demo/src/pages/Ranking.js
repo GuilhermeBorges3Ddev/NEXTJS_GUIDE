@@ -1,5 +1,6 @@
 import React from "react";
 import RoutesMenu from "../components/RoutesMenu";
+import GenericWrapper from "../components/GenericWrapper";
 import TopFiveSection from "../components/TopFiveSection";
 
 export default function Ranking() {
@@ -8,9 +9,9 @@ export default function Ranking() {
       <RoutesMenu
         availableRoutes={["/", "/nutrition", "/register", `/products/`]}
       />
-      <div className="formAndTop5">
+      <GenericWrapper>
         <TopFiveSection />
-      </div>
+      </GenericWrapper>
     </div>
   );
 }

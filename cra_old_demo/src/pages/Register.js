@@ -1,16 +1,17 @@
 import React from "react";
 import RoutesMenu from "../components/RoutesMenu";
 import FormSection from "../components/FormSection";
+import GenericWrapper from "../components/GenericWrapper";
 
 export default function Register() {
   return (
-    <div className="formAndTop5">
+    <GenericWrapper>
       <RoutesMenu
         availableRoutes={["/", "/nutrition", "/ranking", `/products/`]}
       />
       <section>
         <FormSection />
       </section>
-    </div>
+    </GenericWrapper>
   );
 }

@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import styled from "styled-components";
+
+const CustomSection = styled.div`
+  width: "300px";
+`;
 
 export default function TopFiveSection() {
   const [bandsInput, setBandsInput] = useState("");
@@ -19,7 +24,7 @@ export default function TopFiveSection() {
   }, [bandsVector]);
 
   return (
-    <div style={{ width: "300px !important" }}>
+    <CustomSection>
       <h1>Add your top 5 favorite bands:</h1>
       <input
         type="text"
@@ -65,6 +70,6 @@ export default function TopFiveSection() {
           </button>
         </div>
       )}
-    </div>
+    </CustomSection>
   );
 }
