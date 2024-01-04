@@ -1,8 +1,12 @@
+import AppRoutes from "./AppRoutes";
+import GlobalStyle from "./styles/global";
+
 function App() {
   return (
-    <div>
-      <h1>Future list of projects...</h1>
-    </div>
+    <>
+      <GlobalStyle />
+      <AppRoutes />
+    </>
   );
 }
 
