@@ -1,5 +1,16 @@
 import styled, { keyframes, css } from "styled-components";
 
+export const DeleteButton = styled.button.attrs({
+  type: "button",
+})`
+  padding: 8px 7px;
+  outline: 0;
+  border-radius: 4px;
+  color: #0d2636;
+  background: transparent;
+  border: 0;
+`;
+
 export const Container = styled.div`
   max-width: 700px;
   background: #fff;
@@ -37,6 +48,25 @@ const animateLoading = keyframes`
   }
   to {
     transform: rotate(360deg);
+  }
+`;
+
+export const List = styled.ul`
+  list-style: none;
+  margin-top: 20px;
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 15px 0;
+    & + li {
+      border-top: 1px solid #eee;
+    }
+    a {
+      color: #0d2636;
+      text-decoration: none;
+    }
   }
 `;
 
