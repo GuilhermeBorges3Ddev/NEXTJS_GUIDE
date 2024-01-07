@@ -1,10 +1,11 @@
 import api from "../../services/api";
 import { useState, useCallback } from "react";
-import { FaGithub, FaPlus } from "react-icons/fa";
+import { FaGithub, FaPlus, FaSpinner } from "react-icons/fa";
 import { Container, Form, SubmitButton } from "./styles";
 
 export default function Main() {
   const [newRepo, setNewRepo] = useState("");
+  const [loading, setLoading] = useState(false);
   const [repositories, setRepositories] = useState([]);
 
   function handleInputChange(e) {
@@ -15,12 +16,19 @@ export default function Main() {
     (e) => {
       e.preventDefault();
       async function triggerGithubGetRepo() {
-        const response = await api.get(`repos/${newRepo}`);
-        const data = {
-          name: response.data.full_name,
-        };
-        setRepositories([...repositories, data]);
-        setNewRepo("");
+        setLoading(true);
+        try {
+          const response = await api.get(`repos/${newRepo}`);
+          const data = {
+            name: response.data.full_name,
+          };
+          setRepositories([...repositories, data]);
+          setNewRepo("");
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
       }
       triggerGithubGetRepo();
     },
@@ -40,8 +48,12 @@ export default function Main() {
           onChange={handleInputChange}
           placeholder="Add your gisted repos..."
         />
-        <SubmitButton>
-          <FaPlus color="white" size={14} />
+        <SubmitButton loading={loading ? 1 : 0}>
+          {loading ? (
+            <FaSpinner color="white" size={14} />
+          ) : (
+            <FaPlus color="white" size={14} />
+          )}
         </SubmitButton>
       </Form>
     </Container>
