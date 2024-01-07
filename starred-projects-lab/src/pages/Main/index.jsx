@@ -1,14 +1,31 @@
 import api from "../../services/api";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from "react-icons/fa";
 import { DeleteButton, Container, Form, SubmitButton, List } from "./styles";
+
+const DEDUP_REPO = "These repository already exists";
+const INVALID_REPO = "This repo does not exists in Github";
+const VOID_REPO = "You need to identify a valid Github repo, not an empty one";
 
 export default function Main() {
   const [newRepo, setNewRepo] = useState("");
   const [loading, setLoading] = useState(false);
   const [repositories, setRepositories] = useState([]);
+  const [alertErr, setAlert] = useState(null);
+
+  useEffect(() => {
+    const repoStorage = localStorage.getItem("repos");
+    if (repoStorage && JSON.parse(repoStorage)?.length > 0) {
+      setRepositories(JSON.parse(repoStorage));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("repos", JSON.stringify(repositories));
+  }, [repositories]);
 
   function handleInputChange(e) {
+    setAlert(null);
     setNewRepo(e.target.value);
   }
 
@@ -25,15 +42,24 @@ export default function Main() {
       e.preventDefault();
       async function triggerGithubGetRepo() {
         setLoading(true);
+        setAlert(null);
         try {
+          if (!!newRepo === false) {
+            throw new Error(VOID_REPO);
+          }
           const response = await api.get(`repos/${newRepo}`);
+          const hasRepo = repositories.find((repo) => repo.name === newRepo);
+          if (hasRepo) {
+            setAlert(true);
+            throw Error(DEDUP_REPO);
+          }
           const data = {
             name: response.data.full_name,
           };
           setRepositories([...repositories, data]);
           setNewRepo("");
         } catch (error) {
-          console.error(error);
+          alert(error?.response?.status === 404 ? INVALID_REPO : error.message);
         } finally {
           setLoading(false);
         }
@@ -49,7 +75,7 @@ export default function Main() {
         <FaGithub />
         My repositories:
       </h1>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} error={alertErr ? 1 : 0}>
         <input
           type="text"
           value={newRepo}
